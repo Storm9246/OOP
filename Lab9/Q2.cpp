@@ -1,6 +1,4 @@
 #include <iostream>
-#include <vector>
-#include <memory>
 
 using namespace std;
 
@@ -61,18 +59,22 @@ public:
 };
 
 int main() {
-    vector<shared_ptr<SmartDevice>> devices;
+    SmartDevice* devices[2];
 
-    devices.push_back(make_shared<LightBulb>());
-    devices.push_back(make_shared<Thermostat>());
+    devices[0] = new LightBulb();
+    devices[1] = new Thermostat();
 
-    for (auto& device : devices) {
-        device->turnOn();
-        device->getStatus();
+    for (int i = 0; i < 2; ++i) {
+        devices[i]->turnOn();
+        devices[i]->getStatus();
         cout << "-------------------\n";
-        device->turnOff();
-        device->getStatus();
+        devices[i]->turnOff();
+        devices[i]->getStatus();
         cout << "===================\n";
+    }
+
+    for (int i = 0; i < 2; ++i) {
+        delete devices[i];
     }
 
     return 0;
